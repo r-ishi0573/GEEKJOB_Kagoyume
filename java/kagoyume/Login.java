@@ -1,8 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * RAW:
+ * ログインしてるかしてないかの判定を行うクラス(ログアウトも兼ねる)
+ * ログインしている場合はログイン用セッション変数を削除。top.jspへ移動？
+ * ログインしていない場合はlogin.jspへ遷移
+ * TODO:各ページのログインページへのリンクの修正
  */
+
 package kagoyume;
 
 import java.io.IOException;
@@ -11,7 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import javax.servlet.http.HttpSession;
 
 public class Login extends HttpServlet {
 
@@ -26,18 +29,44 @@ public class Login extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet Login</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet Login at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        
+        //セッションスタート
+        HttpSession session = request.getSession();
+        request.setCharacterEncoding("UTF-8");//リクエストパラメータの文字コードをUTF-8に変更
+        response.setContentType("text/html; charset=UTF-8"); 
+        PrintWriter out = response.getWriter();
+        
+        try{
+            
+//            //アクセスルートチェック
+//            String accesschk = request.getParameter("ac");
+//            if(accesschk ==null || (Integer)session.getAttribute("ac")!=Integer.parseInt(accesschk)){
+//                throw new Exception("不正なアクセスです");
+//            }
+            
+            //ログイン用セッション変数を保持
+            UserDataDTO udd = (UserDataDTO)session.getAttribute("Login");
+            
+            //ログインしている場合
+            //ログアウト処理(ログイン用セッションを削除)
+            if(udd != null) {
+                session.removeAttribute("Login"); //NOTICE:これ必要ないかも?
+                //RAW 現状だとログアウトするとカート情報も削除される
+                session.invalidate(); //セッション破棄
+                request.setAttribute("LoginDialog", "ログアウトしました");
+                request.getRequestDispatcher("/top.jsp").forward(request, response);
+            }
+            
+            //TODO:ログインしていない場合の処理
+            //直前のページへのリンクを保存しておく必要あり
+            String transURL = request.getParameter("URL");
+            session.setAttribute("URL", transURL);
+            
+            request.getRequestDispatcher("/login.jsp").forward(request, response);
+        }catch(Exception e){
+            //何らかの理由で失敗したらエラーページにエラー文を渡して表示。想定は不正なアクセスとDBエラー
+            request.setAttribute("error", e.getMessage());
+            request.getRequestDispatcher("/error.jsp").forward(request, response);
         }
     }
 

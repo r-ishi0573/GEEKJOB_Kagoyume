@@ -2,8 +2,6 @@
  * top.jspからフォーム入力を受け取る
  * ⇨YahooショッピングAPIで検索をかけ、結果のjsonファイルを受け取る
  * ⇨seach.jspへ検索結果を渡して遷移
- * RAW 今のところ渡す値は抽出した特定の要素のみ。jsonファイルをマッピングした変数を
- *     渡せば遷移先で要素の抽出が可能だがどうすべきか...？
  */
 package kagoyume;
 
@@ -103,6 +101,7 @@ public class Search extends HttpServlet {
             Map<String, Map<String, Object>> json = JSON.decode(jsonText);
             
             //検索ヒットした結果のうち、返ってきた検索数を格納
+            //RAW:課題の仕様だと上位10件みたいなんで値は10にした方がいいかも？
             int numberOfResult = Integer.parseInt( json.get("ResultSet").get("totalResultsReturned").toString() );
             //out.println(numberOfResult);
             
@@ -153,8 +152,6 @@ public class Search extends HttpServlet {
             session.setAttribute("query", query);
             session.setAttribute("sort", sort);
             session.setAttribute("category_id", category_id);
-            //NOTICE resultを渡せば遷移先で各パラメータの検索をかけることができるが...
-            //session.setAttribute("jselist", jseList);
             session.setAttribute("RESULT", result);
             session.setAttribute("NumOfResults", numberOfResult);
             

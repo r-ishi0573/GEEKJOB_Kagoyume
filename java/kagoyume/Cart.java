@@ -1,17 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * RAW:今のとこcart.jspに飛ぶだけのクラス
+ * TODO:ログインしていない場合の処理
  */
+
 package kagoyume;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.ResultSet;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import javax.servlet.http.HttpSession;
+import java.util.*;
 
 public class Cart extends HttpServlet {
 
@@ -26,19 +28,30 @@ public class Cart extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet Cart</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet Cart at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            response.setContentType("text/html; charset=UTF-8"); 
+        try{
+ 
+            HttpSession session = request.getSession();
+            request.setCharacterEncoding("UTF-8");//リクエストパラメータの文字コードをUTF-8に変更
+            PrintWriter out = response.getWriter();
+            
+            UserDataDTO user = (UserDataDTO)session.getAttribute("Login");
+            
+            //
+            //TODO:ログインしていない場合の処理
+            //      login.jp に遷移する
+            if(user == null) {
+                request.getRequestDispatcher("/login.jsp").forward(request, response);
+            }
+            
+            request.getRequestDispatcher("/cart.jsp").forward(request, response);  
+        }catch(Exception e){
+            //何らかの理由で失敗したらエラーページにエラー文を渡して表示。想定は不正なアクセスとDBエラー
+            request.setAttribute("error", e.getMessage());
+            request.getRequestDispatcher("/error.jsp").forward(request, response);
         }
+        
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

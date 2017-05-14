@@ -1,7 +1,7 @@
 /**
  * RAW:
- * my_update.jspへ飛ぶのみ
- * 
+ * login.jspから入力を受け取ってログイン処理するクラス
+ * DBを検索してログインする処理まではOK
  */
 
 package kagoyume;
@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class My_Update extends HttpServlet {
+public class Login_Complete extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,13 +42,38 @@ public class My_Update extends HttpServlet {
 //                throw new Exception("不正なアクセスです");
 //            }
             
-
-            /**
-             * TODO:Registration_Confirmから戻ってきた場合の処理
-             * 別に処理いらなさそう？
-             */
+            //ユーザ名、パスワード入力を受け取る
+            //TODO:入力が空列の場合の処理はどうするか？
+            String name     = request.getParameter("name");
+            String password = request.getParameter("password");
             
-            request.getRequestDispatcher("/my_update.jsp").forward(request, response);
+            //out.println(name);out.println(password);
+            
+            //DBのテーブルに一致するユーザ,passがあるか調べる
+            UserDataDTO userResult = UserDataDAO .getInstance().compareNamePass(name, password);
+            
+            //ログインOKの場合
+            if(userResult != null) {
+                //ログイン中であることを示す情報をセッションに渡す
+                session.setAttribute("Login", userResult);
+                request.setAttribute("LoginDialog", "ログインしました");
+                String transURL = (String)session.getAttribute("URL");
+                request.getRequestDispatcher(transURL).forward(request, response);
+                //request.getRequestDispatcher(transURL).forward(request, response);
+            }
+            
+            //ログインNGの場合
+            if(userResult == null) {
+                //out.println("ログインできません");
+                request.setAttribute("LoginFailed", "ログインできません。再度入力してください");
+                request.getRequestDispatcher("/login.jsp").forward(request, response);
+            }
+            
+            
+                      
+//            遷移先はログインページに来る前のページだから、一旦リンクを退避させておかないといけない
+//            ただ、そうなるとログインページに飛ぶ前の状態を保持しとかなければいけないか...?
+            //request.getRequestDispatcher("/login.jsp").forward(request, response);
         }catch(Exception e){
             //何らかの理由で失敗したらエラーページにエラー文を渡して表示。想定は不正なアクセスとDBエラー
             request.setAttribute("error", e.getMessage());

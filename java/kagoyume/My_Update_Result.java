@@ -1,7 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * 会員登録確認画面
+ * 入力をDB用の変数UserDataDTOに格納する。
+ * 格納処理まではOK
  */
 package kagoyume;
 
@@ -11,7 +11,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import javax.servlet.http.HttpSession;
 
 public class My_Update_Result extends HttpServlet {
 
@@ -26,19 +26,57 @@ public class My_Update_Result extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet My_Update_Result</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet My_Update_Result at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        
+        //セッションスタート
+        HttpSession session = request.getSession();
+        request.setCharacterEncoding("UTF-8");//リクエストパラメータの文字コードをUTF-8に変更
+        response.setContentType("text/html; charset=UTF-8"); 
+        response.setContentType("application/json; charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        
+        try{
+            
+//            //アクセスルートチェック
+//            String accesschk = request.getParameter("ac");
+//            if(accesschk ==null || (Integer)session.getAttribute("ac")!=Integer.parseInt(accesschk)){
+//                throw new Exception("不正なアクセスです");
+//            }
+            
+            //フォームからの入力を取得して、JavaBeansに格納
+            UserDataDTO udd = new UserDataDTO();
+            udd.setName(request.getParameter("name"));
+            udd.setPassword(request.getParameter("password"));
+            udd.setMail(request.getParameter("mail"));
+            udd.setAddress(request.getParameter("address"));
+            
+            out.println(udd.getName());out.println(udd.getPassword());
+            out.println(udd.getMail());out.println(udd.getAddress());
+            
+            //フォームからhiddenでユーザーIDを受け取りbeansへ
+            int userID = Integer.parseInt(request.getParameter("UserID"));
+            udd.setUserID(userID);
+            //out.print(userID);
+
+            //DBへデータの挿入
+            UserDataDAO .getInstance().update(udd);
+            
+            //DBへのデータ挿入がうまくいけば今ログインしているユーザ情報も変更
+            UserDataDTO loginUserData = (UserDataDTO)session.getAttribute("Login");
+            loginUserData.setName(udd.getName());
+            loginUserData.setPassword(udd.getPassword());
+            loginUserData.setMail(udd.getMail());
+            loginUserData.setAddress(udd.getAddress());
+            
+            //ユーザー情報群をセッションに格納
+            session.setAttribute("Login", loginUserData);
+            //System.out.println("Session updated!!");
+            
+            request.getRequestDispatcher("/my_update_result.jsp").forward(request, response);
+        }catch(Exception e){
+            request.setAttribute("error", e.getMessage());
+            request.getRequestDispatcher("/error.jsp").forward(request, response);
         }
+            
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

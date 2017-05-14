@@ -1,12 +1,25 @@
 /**
  *
  * 定数定義をするクラス
+ * 
  */
+
+/**
+ * セッション用のパラメータ(このファイルに書く留めるべきかは微妙)
+ * "Login", UserDataDTO              ログインしているユーザ情報を示す
+ * "LoginDialog", "ログインしました"    ログインした際に表示。top.jspで使う?       
+ * "LoginFailed", "ログインできません。再度入力してください"
+ *                                   ログイン失敗の際に表示。login.jspで使う? 
+ */
+
 package kagoyume;
 
 import java.util.*;
 
 public class DefineUtil {
+    
+    //トップへのリンクを定数として設定
+    public static final String homeURL = "top.jsp";
 
     //アプリケーションIDを設定
     public static final String appid = "dj0zaiZpPWRvdmFlcFBLbnk4QyZzPWNvbnN1bWVyc2VjcmV0Jng9M2Y-";

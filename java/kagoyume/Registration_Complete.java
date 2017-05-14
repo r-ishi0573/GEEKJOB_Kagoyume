@@ -1,8 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ *
  */
+
 package kagoyume;
 
 import java.io.IOException;
@@ -11,7 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import javax.servlet.http.HttpSession;
 
 public class Registration_Complete extends HttpServlet {
 
@@ -26,18 +25,51 @@ public class Registration_Complete extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet Registration_Complete</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet Registration_Complete at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        
+        //セッションスタート
+        HttpSession session = request.getSession();
+        request.setCharacterEncoding("UTF-8");//リクエストパラメータの文字コードをUTF-8に変更
+        response.setContentType("text/html; charset=UTF-8"); 
+        PrintWriter out = response.getWriter();
+        
+        try{
+            
+//            //アクセスルートチェック
+//            String accesschk = request.getParameter("ac");
+//            if(accesschk ==null || (Integer)session.getAttribute("ac")!=Integer.parseInt(accesschk)){
+//                throw new Exception("不正なアクセスです");
+//            }
+            
+            //セッションから登録用DTOを受け取る
+            UserDataDTO userdata = (UserDataDTO)session.getAttribute("udd");
+            
+//            out.println(userdata.getName());
+//            out.println(userdata.getPassword());
+//            out.println(userdata.getMail());
+//            out.println(userdata.getAddress()); 
+            
+            //DTOオブジェクトにマッピング。DB専用のパラメータに変換
+            //UserDataDTO userdata = new UserDataDTO();
+            //udb.UD2DTOMapping(userdata);
+//            userdata.setName("bbb");
+//            userdata.setPassword("222");
+//            userdata.setMail("yyy");
+//            userdata.setAddress("888");            
+            
+            //DBへデータの挿入
+            UserDataDAO .getInstance().insert(userdata);
+            
+            //成功したのでセッションの値を削除
+            //session.invalidate();
+            
+            //結果画面での表示用に入力パラメータ―をリクエストパラメータとして保持
+            request.setAttribute("udd", userdata);
+            
+            request.getRequestDispatcher("/registration_complete.jsp").forward(request, response);
+        }catch(Exception e){
+            //何らかの理由で失敗したらエラーページにエラー文を渡して表示。想定は不正なアクセスとDBエラー
+            request.setAttribute("error", e.getMessage());
+            request.getRequestDispatcher("/error.jsp").forward(request, response);
         }
     }
 
