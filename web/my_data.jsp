@@ -56,7 +56,7 @@
         <a href="My_Update">登録情報を変更する</a><br>
         <a href="My_Delete">登録情報を削除する</a><br>
         
-        <a href="Login?URL=my_data.jsp">"><% out.print(user == null ? "ログイン" : "ログアウト"); %></a><br>
+        <a href="Login?URL=my_data.jsp"><% out.print(user == null ? "ログイン" : "ログアウト"); %></a><br>
         <!-- Begin Yahoo! JAPAN Web Services Attribution Snippet -->
         <a href="http://developer.yahoo.co.jp/about">
             <img src="http://i.yimg.jp/images/yjdn/yjdn_attbtn2_105_17.gif" width="105" height="17" title="Webサービス by Yahoo! JAPAN" alt="Webサービス by Yahoo! JAPAN" border="0" style="margin:15px 15px 15px 15px"></a>

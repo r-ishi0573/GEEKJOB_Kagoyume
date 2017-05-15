@@ -115,14 +115,16 @@ public class JsonSearchElements implements Serializable{
             //jsonテキストをjsonic使ってパース
             Map<String, Map<String, Object>> json = JSON.decode(jsonText);
             
-            //検索ヒットなしの場合はfalse返して終了
-            //if( Integer.valueOf((String) json.get("ResultSet").get("totalResultsReturned")).equals(0) ) {
-            //    return false;
-            //}
+            
             
             //検索ヒットした結果のうち、返ってきた検索数を格納
             //RAW:課題の仕様だと上位10件みたいなんで値は10にした方がいいかも？
             //int numberOfResult = Integer.parseInt( json.get("ResultSet").get("totalResultsReturned").toString() );
+            
+            //検索ヒットなしの場合はfalse返して終了
+            //if( numberOfResult == 0 ) {
+            //    return false;
+            //}
             
             //"Resultset"->"0"->"Result"以降のオブジェクトを保存
             Map<String, Object> result = 

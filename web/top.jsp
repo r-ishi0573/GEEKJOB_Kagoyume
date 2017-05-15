@@ -57,7 +57,7 @@
         </form>
             
         <!--ログインしてるかしていないかでログインリンクの表示変更-->
-        <a href="Login?URL=top.jsp">"><% out.print(user == null ? "ログイン" : "ログアウト"); %></a><br>
+        <a href="Login?URL=top.jsp"><% out.print(user == null ? "ログイン" : "ログアウト"); %></a><br>
             
         <!--カートの表示-->
         <a href="Cart"><% out.print("カートを見る"); %></a><br>

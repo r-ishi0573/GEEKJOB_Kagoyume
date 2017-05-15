@@ -10,7 +10,7 @@
     HttpSession hs = request.getSession();
     ScriptUtil sUtil = new ScriptUtil();
     final UserDataDTO user = (UserDataDTO)hs.getAttribute("Login");
-    ArrayList<JsonSearchElements> jseList = (ArrayList<JsonSearchElements>)session.getAttribute("JseList");
+    ArrayList<JsonSearchElements> jseList = (ArrayList<JsonSearchElements>)hs.getAttribute("JseList");
 %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -27,7 +27,7 @@
         <br>
         <a href="search.jsp">検索結果に戻る</a><br>
         
-        <a href="Login?URL=buy_complete.jsp">"><% out.print(user == null ? "ログイン" : "ログアウト"); %></a>
+        <a href="Login?URL=buy_complete.jsp"><% out.print(user == null ? "ログイン" : "ログアウト"); %></a>
         <a href="Registration">会員登録</a><br>
         <!-- Begin Yahoo! JAPAN Web Services Attribution Snippet -->
         <a href="http://developer.yahoo.co.jp/about">

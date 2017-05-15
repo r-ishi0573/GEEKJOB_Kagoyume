@@ -15,7 +15,8 @@
     int numOfResults = (int)hs.getAttribute("NumOfResults"); //検索結果の数(最大20)
     Map<String, Object> result = (Map<String, Object>)hs.getAttribute("RESULT");
     //RAW: セッションではなくスコープから受け取る
-    String numberOfHit = (String)request.getAttribute("NumberOfHit");
+    //やっぱりセッションで
+    String numberOfHit = (String)hs.getAttribute("NumberOfHit");
     final UserDataDTO user = (UserDataDTO)hs.getAttribute("Login");
 %>
 
@@ -55,7 +56,7 @@
             <input type="submit" value="カートに入れる"/>
         </form>
             
-        <a href="Login?URL=item.jsp">"><% out.print(user == null ? "ログイン" : "ログアウト"); %></a><br>
+        <a href="Login?URL=item.jsp"><% out.print(user == null ? "ログイン" : "ログアウト"); %></a><br>
         <!-- Begin Yahoo! JAPAN Web Services Attribution Snippet -->
         <a href="http://developer.yahoo.co.jp/about">
             <img src="http://i.yimg.jp/images/yjdn/yjdn_attbtn2_105_17.gif" width="105" height="17" title="Webサービス by Yahoo! JAPAN" alt="Webサービス by Yahoo! JAPAN" border="0" style="margin:15px 15px 15px 15px"></a>

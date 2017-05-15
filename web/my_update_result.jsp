@@ -25,6 +25,6 @@
         自己紹介:<%= user.getAddress()%><br>
         以上の内容で登録しました。<br>
     </body>
-    <a href="Login?URL=my_update_result.jsp">"><% out.print(user == null ? "ログイン" : "ログアウト"); %></a><br>
+    <a href="Login?URL=my_update_result.jsp"><% out.print(user == null ? "ログイン" : "ログアウト"); %></a><br>
      <%=sUtil.home()%>  
 </html>

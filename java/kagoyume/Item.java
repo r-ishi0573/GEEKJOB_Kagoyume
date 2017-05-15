@@ -46,7 +46,7 @@ public class Item extends HttpServlet {
             //
             //入力を取得する処理
             //
-            //検索Hitした"i"番目を示す。index空でないかチェック
+            //検索で表示された商品のうち、何番目の商品がクリックされたかの値。空でないかもチェック
             String numberOfHit = !(request.getParameter("NumberOfHit").isEmpty()) ? request.getParameter("NumberOfHit") : "";
             //out.println(numberOfHit);
          
@@ -55,7 +55,8 @@ public class Item extends HttpServlet {
             Map<String, Object> hitOfResults  = ((Map<String, Object>) result.get(numberOfHit));
             
             //RAW: セッションではなくスコープへ渡す
-            request.setAttribute("NumberOfHit", numberOfHit);
+            //やっぱりセッションで
+            session.setAttribute("NumberOfHit", numberOfHit);
             
             request.getRequestDispatcher("/item.jsp").forward(request, response);  
         }catch(Exception e){

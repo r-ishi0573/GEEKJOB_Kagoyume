@@ -13,7 +13,7 @@
     HttpSession hs = request.getSession();
     ScriptUtil sUtil = new ScriptUtil();
     final UserDataDTO user = (UserDataDTO)hs.getAttribute("Login");
-    ArrayList<JsonSearchElements> jseList = (ArrayList<JsonSearchElements>)session.getAttribute("JseList");
+    ArrayList<JsonSearchElements> jseList = (ArrayList<JsonSearchElements>)hs.getAttribute("JseList");
 %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -42,10 +42,10 @@
             out.print("<br>");
         %>
         <br>
-        <a href="Cart">カートへ進む</a><br>
+        <a href="Cart?URL=add.jsp">カートへ進む</a><br>
         <a href="search.jsp">検索結果に戻る</a><br>
         
-        <a href="Login?URL=add.jsp">"><% out.print(user == null ? "ログイン" : "ログアウト"); %></a>
+        <a href="Login?URL=add.jsp"><% out.print(user == null ? "ログイン" : "ログアウト"); %></a>
         <br>
         <a href="Registration">会員登録</a><br>
         <!-- Begin Yahoo! JAPAN Web Services Attribution Snippet -->

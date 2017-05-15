@@ -44,6 +44,6 @@
         <input type="submit" name="btnSubmit" value="確認画面へ">
     </form>
         <br>
-        <a href="Login?URL=registration.jsp">"><% out.print(user == null ? "ログイン" : "ログアウト"); %></a><br>
+        <a href="Login?URL=registration.jsp"><% out.print(user == null ? "ログイン" : "ログアウト"); %></a><br>
     </body>
 </html>

@@ -46,6 +46,6 @@
         <input type="submit" name="btnSubmit" value="登録">
     </form>
         <br>
-        <a href="Login?URL=my_update.jsp">"><% out.print(user == null ? "ログイン" : "ログアウト"); %></a><br>
+        <a href="Login?URL=my_update.jsp"><% out.print(user == null ? "ログイン" : "ログアウト"); %></a><br>
     </body>
 </html>

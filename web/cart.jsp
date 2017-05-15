@@ -72,7 +72,7 @@
         <!--カート表示ここまで-->
         
         <br>
-        <a href="Login?URL=cart.jsp">"><% out.print(user == null ? "ログイン" : "ログアウト"); %></a>
+        <a href="Login?URL=cart.jsp"><% out.print(user == null ? "ログイン" : "ログアウト"); %></a>
         <!-- Begin Yahoo! JAPAN Web Services Attribution Snippet -->
         <a href="http://developer.yahoo.co.jp/about">
             <img src="http://i.yimg.jp/images/yjdn/yjdn_attbtn2_105_17.gif" width="105" height="17" title="Webサービス by Yahoo! JAPAN" alt="Webサービス by Yahoo! JAPAN" border="0" style="margin:15px 15px 15px 15px"></a>

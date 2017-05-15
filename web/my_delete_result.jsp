@@ -20,6 +20,6 @@
     <body>
         <h1>ユーザーを削除しました</h1><br>
     </body>
-    <a href="Login?URL=my_delete_result.jsp">"><% out.print(user == null ? "ログイン" : "ログアウト"); %></a><br>
+    <a href="Login?URL=my_delete_result.jsp"><% out.print(user == null ? "ログイン" : "ログアウト"); %></a><br>
      <%=sUtil.home()%>  
 </html>

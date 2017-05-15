@@ -27,7 +27,7 @@
             パスワード:<input type="text" name="password" value=""/>
             <input type="submit" value="送信"/>
         </form>
-        <a href="Login?URL=login.jsp">">ログイン</a><br>
+        <a href="Login?URL=login.jsp">ログイン</a><br>
         <a href="Registration">会員登録</a><br>
         <!-- Begin Yahoo! JAPAN Web Services Attribution Snippet -->
         <a href="http://developer.yahoo.co.jp/about">

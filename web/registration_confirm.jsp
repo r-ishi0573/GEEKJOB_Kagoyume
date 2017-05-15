@@ -42,6 +42,6 @@
             <input type="submit" name="no" value="登録画面に戻る">
             <input type="hidden" name="mode" value="REINPUT">
         </form>
-        <a href="Login?URL=registration_confirm.jsp">"><% out.print(user == null ? "ログイン" : "ログアウト"); %></a><br>
+        <a href="Login?URL=registration_confirm.jsp"><% out.print(user == null ? "ログイン" : "ログアウト"); %></a><br>
     </body>
 </html>

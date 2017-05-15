@@ -14,7 +14,7 @@
     HttpSession hs = request.getSession();
     ScriptUtil sUtil = new ScriptUtil();
     final UserDataDTO user = (UserDataDTO)hs.getAttribute("Login");
-    ArrayList<JsonSearchElements> jseList = (ArrayList<JsonSearchElements>)session.getAttribute("JseList");
+    ArrayList<JsonSearchElements> jseList = (ArrayList<JsonSearchElements>)hs.getAttribute("JseList");
     //out.println(request.getParameter("delete"));
     //カートで削除リンクが押された場合に削除する
     //if(request.getParameter("delete") != null) {
@@ -61,7 +61,7 @@
         </form>
         
         <br>
-        <a href="Login?URL=buy_confirm.jsp">"><% out.print(user == null ? "ログイン" : "ログアウト"); %></a>
+        <a href="Login?URL=buy_confirm.jsp"><% out.print(user == null ? "ログイン" : "ログアウト"); %></a>
         <!-- Begin Yahoo! JAPAN Web Services Attribution Snippet -->
         <a href="http://developer.yahoo.co.jp/about">
             <img src="http://i.yimg.jp/images/yjdn/yjdn_attbtn2_105_17.gif" width="105" height="17" title="Webサービス by Yahoo! JAPAN" alt="Webサービス by Yahoo! JAPAN" border="0" style="margin:15px 15px 15px 15px"></a>

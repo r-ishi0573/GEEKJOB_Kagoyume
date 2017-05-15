@@ -1,5 +1,4 @@
 /**
- * RAW:今のとこcart.jspに飛ぶだけのクラス
  * TODO:ログインしていない場合の処理
  */
 
@@ -38,9 +37,13 @@ public class Cart extends HttpServlet {
             UserDataDTO user = (UserDataDTO)session.getAttribute("Login");
             
             //
-            //TODO:ログインしていない場合の処理
-            //      login.jp に遷移する
+            //ログインしていない場合の処理
+            //login.jp に遷移する。ログインできた場合のためにカートページのURLを保持
             if(user == null) {
+                //直前のページへのリンクを保存しておく必要あり
+                //String transURL = request.getParameter("URL");
+                String transURL = "cart.jsp";
+                session.setAttribute("URL", transURL);
                 request.getRequestDispatcher("/login.jsp").forward(request, response);
             }
             

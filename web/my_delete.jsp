@@ -42,6 +42,6 @@
     <a href="top.jsp">いいえ</a><br>
     <br>
  
-    <a href="Login?URL=my_delete.jsp">"><% out.print(user == null ? "ログイン" : "ログアウト"); %></a><br>
+    <a href="Login?URL=my_delete.jsp"><% out.print(user == null ? "ログイン" : "ログアウト"); %></a><br>
     </body>
 </html>

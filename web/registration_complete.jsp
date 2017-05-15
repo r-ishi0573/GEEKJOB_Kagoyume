@@ -26,6 +26,6 @@
         自己紹介:<%= udd.getAddress()%><br>
         以上の内容で登録しました。<br>
     </body>
-    <a href="Login?URL=registration_complete.jsp">"><% out.print(user == null ? "ログイン" : "ログアウト"); %></a><br>
+    <a href="Login?URL=registration_complete.jsp"><% out.print(user == null ? "ログイン" : "ログアウト"); %></a><br>
      <%=sUtil.home()%>  
 </html>
